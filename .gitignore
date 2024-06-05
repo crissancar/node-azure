@@ -1,6 +1,9 @@
 # environments
 .env
 
+# jest
+.tmp
+
 # local history
 .history
 
