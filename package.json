@@ -14,6 +14,7 @@
     "docker:start:database": "docker-compose up -d mongo",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "npm:check:updates": "ncu -i --format group",
+    "start": "NODE_ENV=production node dist/src/server/start",
     "start:dev": "export $(cat .env | xargs) > /dev/null && NODE_ENV=dev ts-node-dev --ignore-watch node_modules ./src/server/start.ts",
     "start:prod": "NODE_ENV=production node dist/src/server/start"
   },
