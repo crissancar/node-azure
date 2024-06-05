@@ -16,15 +16,12 @@
 * [Getting Started](#getting-started)
     * [Prerequisites](#prerequisites)
     * [Installation](#installation)
-    * [Infrastructure](#infrastructure)
-    * [Database](#database)
     * [Running the apps](#running-the-apps)
 
 <!-- Technologies -->
 ## Technologies and skills
 As **technologies and tools**, this skeleton API uses:
 - **Node.js and Express.js** as development framework
-- **Mongodb** as database
 - **Microsoft Azure** as cloud service
 
 <!-- GETTING STARTED -->
@@ -49,14 +46,7 @@ $ git clone https://github.com/crissancar/node-azure.git
 $ npm install
 ```
 
-### Environment
-Rename the .env.example file to .env and assign the variables values
-
-### Databases
-#### MongoDB
-Connect with MongoDB Atlas cluster
-
-### Running the apps
+### Running the app
 ```bash
 $ npm run start:dev
 ```
