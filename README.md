@@ -20,7 +20,7 @@
 
 <!-- Technologies -->
 ## Technologies and skills
-As **technologies and tools**, this skeleton API uses:
+As **technologies and tools**, this API uses:
 - **Node.js and Express.js** as development framework
 - **Microsoft Azure** as cloud service
 
