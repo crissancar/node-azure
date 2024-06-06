@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - '*'
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
@@ -12,7 +15,7 @@ env:
 
 jobs:
   build_and_test:
-    name: Build and test application
+    name: Build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -36,6 +39,7 @@ jobs:
     name: Push image to registry
     runs-on: ubuntu-latest
     needs: build_and_test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     steps:
       - name: Check repository
@@ -63,6 +67,8 @@ jobs:
     name: Deploy image to Azure
     needs: ['build_and_test', 'push_to_registry']
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
     steps:
     - name: App Service deploy
       uses: azure/webapps-deploy@v2
