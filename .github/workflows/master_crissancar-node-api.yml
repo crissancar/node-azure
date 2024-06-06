@@ -13,6 +13,7 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} 
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
   DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }} 
+  AZURE_PUBLISH_PROFILE: ${{ secrets.AzureAppService_PublishProfile_4622d6ba88814c8f8ead4fe59304cff9 }}
 
 jobs:
   build:
@@ -56,5 +57,5 @@ jobs:
       with:
         app-name: 'crissancar-node-api'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4622d6ba88814c8f8ead4fe59304cff9 }}
-        images: ${{ env.DOCKER_REPOSITORY }}:latest}
+        publish-profile: ${{ env.AZURE_PUBLISH_PROFILE }}
+        images: ${{ env.DOCKER_REPOSITORY }}:latest
