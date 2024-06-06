@@ -12,7 +12,7 @@ env:
 
 jobs:
   build_and_test:
-    name: Build and testssssssssss
+    name: Build and testsssssssss
     runs-on: ubuntu-latest
 
     steps:
