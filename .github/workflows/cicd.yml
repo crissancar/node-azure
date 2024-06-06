@@ -18,7 +18,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build website image
       run: | 
-        docker build --platform linux --tag crissancar/training:latest -f src/Dockerfile .
+        docker build --platform linux --tag crissancar/training:latest
     - name: Publish website image
       run: |
         docker push crissancar/training:latest
