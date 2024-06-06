@@ -9,6 +9,11 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} 
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
+  DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }} 
+
 jobs:
   build:
     runs-on: 'ubuntu-latest'
@@ -22,16 +27,20 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://index.docker.io/v1/
-        username: ${{ secrets.AzureAppService_ContainerUsername_85e210e8c8364c44bebcda4c4ccb12a8 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_9d68e0ba6c0d4d7a965bfe9e8669b0e7 }}
+        # registry: https://index.docker.io/v1/
+        username: ${{ env.DOCKER_USERNAME }}
+        password: ${{ env.DOCKER_PASSWORD }}
 
     - name: Build and push container image to registry
+      id: docker_build
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_85e210e8c8364c44bebcda4c4ccb12a8 }}/crissancar/training:${{ github.sha }}
+        tags: ${{ env.DOCKER_REPOSITORY }}:latest}
         file: ./Dockerfile
+
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,4 +57,4 @@ jobs:
         app-name: 'crissancar-node-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_4622d6ba88814c8f8ead4fe59304cff9 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_85e210e8c8364c44bebcda4c4ccb12a8 }}/crissancar/training:${{ github.sha }}'
+        images: ${{ env.DOCKER_REPOSITORY }}:latest}
