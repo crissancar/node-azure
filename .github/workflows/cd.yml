@@ -1,9 +1,8 @@
-name: Deploy to Azure
+name: CD
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
