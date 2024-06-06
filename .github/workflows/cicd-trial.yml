@@ -1,4 +1,4 @@
-name: Build, test and deploy
+name: Build, test and deploy app to Azure
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
 
 jobs:
   build_and_test:
-    name: Build and tests in Node.js
+    name: Build and testssssssssss
     runs-on: ubuntu-latest
 
     steps:
