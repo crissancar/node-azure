@@ -1,6 +1,6 @@
 {
   "name": "node-azure",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Training Node.js and Microsoft Azure",
   "repository": {
     "type": "git",
