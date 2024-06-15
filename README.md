@@ -10,7 +10,6 @@
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
-
 * [Technologies and skills](#technologies-and-skills)
 * [Getting Started](#getting-started)
     * [Prerequisites](#prerequisites)
