@@ -47,9 +47,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # - name: Create empty CHANGELOG.md if not exist
-    #   run: touch CHANGELOG.md
-
     - name: Create release
       uses: actions/create-release@v1
       env:
