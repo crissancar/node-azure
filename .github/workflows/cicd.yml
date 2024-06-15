@@ -2,8 +2,9 @@ name: CI/CD
 
 on:
   pull_request:
+    branches: [randomm]
   push:
-    branches: [master]
+    branches: [randomm]
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
