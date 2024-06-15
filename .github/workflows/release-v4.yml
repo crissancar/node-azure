@@ -61,8 +61,8 @@ jobs:
     - name: List files
       run: ls -la
 
-    - name: Print CHANGELOG.md
-      run: cat CHANGELOG.md
+    - name: Create empty CHANGELOG.md if it doesn't exist
+      run: touch CHANGELOG.md
 
     - name: Create Release
       uses: actions/create-release@v1
