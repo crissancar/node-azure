@@ -1,0 +1,46 @@
+name: Release v2
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version type to release (major, minor, patch)'
+        required: true
+
+env:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }} 
+  DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY }} 
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} 
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Calculate next version
+      id: next_version
+      uses: slim-hatena/semantic-versioning-calculator-action@main
+      with:
+        version: ${{ github.event.inputs.version }}
+
+    - name: Generating changelog
+      id: changelog
+      uses: heinrichreimer/action-github-changelog-generator@v2.4
+      with:
+        token: ${{ secrets.GH_TOKEN }}
+
+    - name: Create GitHub release
+      id: create_release
+      uses: ncipollo/release-action@v1.14.0
+      with:
+        tag: ${{ steps.next_version.outputs.version }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GH_TOKEN }}
