@@ -46,7 +46,7 @@ jobs:
         echo "## [${{ steps.package.outputs.newTag }}] - $(date +'%Y-%m-%d')" >> CHANGELOG.md
         echo "" >> CHANGELOG.md
         echo "### Commits" >> CHANGELOG.md
-        git log --pretty=format:"- %h %s" >> CHANGELOG.md
+        git log --pretty=format:"- %h %s (%an)" >> CHANGELOG.md
 
     - name: Create release
       uses: actions/create-release@v1
