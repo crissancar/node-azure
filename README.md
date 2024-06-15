@@ -24,7 +24,6 @@ As **technologies and tools**, this API uses:
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
 This is an instructions on setting up the project locally.
 
 ### Prerequisites
