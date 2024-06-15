@@ -45,7 +45,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Debug new version
-      run: echo "New version is ${{ steps.package.outputs.newVersion }} and ${{ version }}"
+      run: echo "New version is ${{ steps.package.outputs.newVersion }} and {{ version }}"
 
     - name: Debug outputs
       run: echo "Outputs ${{ toJson(steps.package.outputs) }}"
