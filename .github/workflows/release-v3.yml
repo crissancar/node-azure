@@ -39,14 +39,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
     - name: Generate changelog
-      uses: github-changelog-generator/github-changelog-generator@master
+      uses: heinrichreimer/action-github-changelog-generator@v2.3
       with:
         token: ${{ secrets.GH_TOKEN }}
-        base: ''
-        header-label: '# Changelog'
-        unreleased-label: '## [Unreleased]'
-        compare-link-label: '[Full Changelog]'
-        future-release: ${{ steps.package.outputs.newVersion }}
 
     - name: Create Release
       id: create_release
