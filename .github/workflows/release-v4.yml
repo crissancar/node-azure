@@ -55,12 +55,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Debug tag_name
+      run: echo "${{ toJson(steps.package.outputs) }}"
+
     - name: Create Release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.package.outputs.newVersion }}
+        tag_name: ${{ steps.package.outputs.newTag }}
         release_name: Release ${{ steps.package.outputs.newTag }}
         body_path: CHANGELOG.md
         draft: false
