@@ -28,11 +28,8 @@ jobs:
       with:
         node-version: '18'
 
-    # - name: Install dependencies
-    #   run: npm i
-
-    - name: Debug variables
-      run: echo "Input version <${{ github.event.inputs.version }}> \n Outputs <${{ steps.package.outputs }}>"
+    - name: Debug version type
+      run: echo "Version type <${{ github.event.inputs.version }}>"
 
     - name: Bump version in package.json
       id: package
@@ -44,11 +41,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Debug new version
-      run: echo "New version is ${{ steps.package.outputs.newVersion }} and {{ version }}"
-
-    - name: Debug outputs
-      run: echo "Outputs ${{ toJson(steps.package.outputs) }}"
+    - name: Debug bump version output
+      run: echo "${{ toJson(steps.package.outputs) }}"
 
     - name: Generate changelog
       uses: mikepenz/release-changelog-builder-action@v2
@@ -56,19 +50,18 @@ jobs:
         configuration: |
           {
             "output": "CHANGELOG.md",
-            "future-release": "${{ steps.package.outputs.newVersion }}"
+            "future-release": "${{ steps.package.outputs.newTag }}"
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create Release
-      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.package.outputs.newVersion }}
-        release_name: Release ${{ steps.package.outputs.newVersion }}
+        release_name: Release ${{ steps.package.outputs.newTag }}
         body_path: CHANGELOG.md
         draft: false
         prerelease: false
