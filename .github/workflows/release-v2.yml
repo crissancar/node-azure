@@ -25,7 +25,7 @@ jobs:
 
     - name: Calculate next version
       id: next_version
-      uses: slim-hatena/semantic-versioning-calculator-action@main
+      uses: slime-hatena/semantic-versioning-calculator-action@main
       with:
         version: ${{ github.event.inputs.version }}
 
