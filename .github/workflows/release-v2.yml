@@ -29,9 +29,10 @@ jobs:
     #   with:
     #     version: ${{ github.event.inputs.version }}
     - name: Bump version in package.json
-      run: npm version ${{ github.event.inputs.version }} --no-git-tag-version
+      run: |
+        npm version ${{ github.event.inputs.version }}
+        git push --tags{{ github.event.inputs.version }} --no-git-tag-version
         
-
     - name: Generating changelog
       id: changelog
       uses: heinrichreimer/action-github-changelog-generator@v2.4
