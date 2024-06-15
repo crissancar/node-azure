@@ -28,6 +28,10 @@ jobs:
     - name: Debug version type
       run: echo "Version type is '${{ github.event.inputs.version }}'"
 
+    - name: Get previous version
+      id: prev_version
+      run: echo "::set-output name=version::$(git describe --tags --abbrev=0)"
+
     - name: Bump version
       id: package
       uses: phips28/gh-action-bump-version@master
@@ -48,7 +52,7 @@ jobs:
         echo "## [${{ steps.package.outputs.newTag }}] - $(date +'%Y-%m-%d')" >> CHANGELOG.md
         echo "" >> CHANGELOG.md
         echo "### Commits" >> CHANGELOG.md
-        git log --pretty=format:"- %h %s" --max-count=200 >> CHANGELOG.md
+        git log --pretty=format:"- %h %s" ${{ steps.prev_version.outputs.version }}..${{ steps.package.outputs.newTag }} >> CHANGELOG.md
 
     - name: Create release
       uses: actions/create-release@v1
