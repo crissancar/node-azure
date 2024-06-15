@@ -38,6 +38,7 @@ jobs:
     - name: Bump version in package.json
       id: bump_version
       run: |
+        git tag -d v$(npm version --no-git-tag-version patch)
         echo "::set-output name=version::$(npm version ${{ github.event.inputs.version }} | cut -c 2-)"
         git push
         git push --tags
