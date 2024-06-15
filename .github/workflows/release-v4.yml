@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Tipo de versión a generar (major, minor, patch)'
+        description: 'Version type (major, minor, patch)'
         required: true
         default: 'patch'
 
@@ -18,10 +18,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Git user
-      run: |
-        git config --global user.email "$(git log -1 --pretty=format:'%ae')"
-        git config --global user.name "$(git log -1 --pretty=format:'%an')"
+    # - name: Set up Git user
+    #   run: |
+    #     git config --global user.email "$(git log -1 --pretty=format:'%ae')"
+    #     git config --global user.name "$(git log -1 --pretty=format:'%an')"
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
@@ -29,7 +29,7 @@ jobs:
         node-version: '18'
 
     - name: Debug version type
-      run: echo "Version type <${{ github.event.inputs.version }}>"
+      run: echo "Version type is '${{ github.event.inputs.version }}'"
 
     - name: Bump version in package.json
       id: package
@@ -37,7 +37,7 @@ jobs:
       with:
         tag-prefix: 'v'
         -type: ${{ github.event.inputs.version }}
-        commit-message: 'CI: bumps version to {{version}} [skip ci]'
+        commit-message: 'ci: bumps version to {{version}} [skip ci]'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,22 +55,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Debug tag_name
-      run: echo "${{ toJson(steps.package.outputs) }}"
-    
-    - name: List files
-      run: ls -la
-
-    - name: Create empty CHANGELOG.md if it doesn't exist
+    - name: Create empty CHANGELOG.md if not exist
       run: touch CHANGELOG.md
 
-    - name: Create Release
+    - name: Create release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.package.outputs.newTag }}
-        release_name: Release ${{ steps.package.outputs.newTag }}
+        release_name: ${{ steps.package.outputs.newTag }}
         body_path: CHANGELOG.md
         draft: false
         prerelease: false
