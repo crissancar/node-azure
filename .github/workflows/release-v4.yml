@@ -45,8 +45,6 @@ jobs:
         commitMode: true
         configurationJson: |
           {
-            "output": "CHANGELOG.md",
-            "future-release": "${{ steps.package.outputs.newTag }}"
             "template": "#{{CHANGELOG}}",
             "categories": [
               {
@@ -72,8 +70,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create empty CHANGELOG.md if not exist
-      run: touch CHANGELOG.md
+    # - name: Create empty CHANGELOG.md if not exist
+    #   run: touch CHANGELOG.md
 
     - name: Create release
       uses: actions/create-release@v1
