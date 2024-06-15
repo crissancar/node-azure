@@ -42,8 +42,9 @@ jobs:
     - name: Generate changelog
       uses: mikepenz/release-changelog-builder-action@v2
       with:
+        output: CHANGELOG.md
         commitMode: true
-        configurationJson: |
+        configuration: |
           {
             "template": "#{{CHANGELOG}}",
             "categories": [
