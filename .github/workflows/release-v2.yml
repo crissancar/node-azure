@@ -39,6 +39,7 @@ jobs:
       id: bump_version
       run: |
         echo "::set-output name=version::$(npm version ${{ github.event.inputs.version }} | cut -c 2-)"
+        git push
         git push --tags
         
     - name: Generating changelog
