@@ -1,0 +1,58 @@
+name: Manual Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tipo de versión a generar (major, minor, patch)'
+        required: true
+        default: 'patch'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Git user
+      run: |
+        git config --global user.email "$(git log -1 --pretty=format:'%ae')"
+        git config --global user.name "$(git log -1 --pretty=format:'%an')"
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Bump version in package.json
+      id: package
+      uses: phips28/gh-action-bump-version@master
+      with:
+        tag-prefix: ''
+        version-type: ${{ github.event.inputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate changelog
+      uses: github-changelog-generator/action@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        base: ''
+        header-label: '# Changelog'
+        unreleased-label: '## [Unreleased]'
+        compare-link-label: '[Full Changelog]'
+        future-release: ${{ steps.package.outputs.newVersion }}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.package.outputs.newVersion }}
+        release_name: Release ${{ steps.package.outputs.newVersion }}
+        body_path: CHANGELOG.md
+        draft: false
+        prerelease: false
