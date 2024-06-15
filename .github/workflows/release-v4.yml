@@ -57,6 +57,9 @@ jobs:
 
     - name: Debug tag_name
       run: echo "${{ toJson(steps.package.outputs) }}"
+    
+    - name: List files
+      run: ls -la
 
     - name: Create Release
       uses: actions/create-release@v1
