@@ -33,7 +33,6 @@ $ nvm use 20.11.1
 ```
 
 ### Installation
-
 1. Clone repository
 ```bash
 $ git clone https://github.com/crissancar/node-azure.git
