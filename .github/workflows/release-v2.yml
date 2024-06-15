@@ -18,6 +18,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Get owner info
+      id: get_info
+      run: |
+        OWNER_NAME=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }} | jq .owner.login -r)
+        OWNER_EMAIL=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/$OWNER_NAME | jq .email -r)
+        echo "::set-output name=owner_name::$OWNER_NAME"
+        echo "::set-output name=owner_email::$OWNER_EMAIL"
+
+    - name: Set git user
+      run: |
+        git config --global user.email "${{ steps.get_info.outputs.owner_email }}"
+        git config --global user.name "${{ steps.get_info.outputs.owner_name }}"
     - name: Checkout code
       uses: actions/checkout@v4
       with:
@@ -31,7 +43,7 @@ jobs:
     - name: Bump version in package.json
       run: |
         npm version ${{ github.event.inputs.version }}
-        git push --tags{{ github.event.inputs.version }} --no-git-tag-version
+        git push --tags
         
     - name: Generating changelog
       id: changelog
