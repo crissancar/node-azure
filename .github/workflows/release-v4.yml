@@ -15,18 +15,13 @@ jobs:
       contents: write
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
 
-    # - name: Set up Git user
-    #   run: |
-    #     git config --global user.email "$(git log -1 --pretty=format:'%ae')"
-    #     git config --global user.name "$(git log -1 --pretty=format:'%an')"
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
+    # - name: Setup Node.js
+    #   uses: actions/setup-node@v2
+    #   with:
+    #     node-version: '18'
 
     - name: Debug version type
       run: echo "Version type is '${{ github.event.inputs.version }}'"
