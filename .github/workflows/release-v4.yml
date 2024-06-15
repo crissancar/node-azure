@@ -32,7 +32,7 @@ jobs:
     #   run: npm i
 
     - name: Debug variables
-      run: echo "Inputs <${{ github.event.inputs }}> \n Outputs <${{ steps.package.outputs }}> \n Version <{{version}}>"
+      run: echo "Input version <${{ github.event.inputs.version }}> \n Outputs <${{ steps.package.outputs }}> \n Version <${{ version }}>"
 
     - name: Bump version in package.json
       id: package
