@@ -44,4 +44,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest,${{ env.DOCKERHUB_REPOSITORY }}:$(npm version | grep \\\"version\\\" | cut -d '\"' -f 4)-staging,${{ env.DOCKERHUB_REPOSITORY }}:$(npm version | grep \\\"version\\\" | cut -d '\"' -f 4)-prod
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest,${{ env.DOCKERHUB_REPOSITORY }}:${{ github.event.release.tag_name }}-staging,${{ env.DOCKERHUB_REPOSITORY }}:${{ github.event.release.tag_name }}-prod
