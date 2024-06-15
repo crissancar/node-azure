@@ -1,0 +1,52 @@
+name: Manual CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version type to release (major, minor, patch)'
+        required: true
+
+env:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }} 
+  DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY }} 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js version
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build application
+      run: npm run build --if-present
+
+    - name: Run tests
+      run: npm test
+
+    - name: Bump version
+      run: npm version ${{ github.event.inputs.version }}
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ env.DOCKERHUB_USERNAME }}
+        password: ${{ env.DOCKERHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest,${{ env.DOCKERHUB_REPOSITORY }}:$(npm version | grep \\\"version\\\" | cut -d '\"' -f 4)-staging,${{ env.DOCKERHUB_REPOSITORY }}:$(npm version | grep \\\"version\\\" | cut -d '\"' -f 4)-prod
