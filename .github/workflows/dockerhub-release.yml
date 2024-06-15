@@ -1,9 +1,8 @@
 name: Dockerhub Release
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
