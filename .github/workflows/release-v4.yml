@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout code
@@ -24,22 +26,26 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '18'
 
-    - name: Install dependencies
-      run: npm i
+    # - name: Install dependencies
+    #   run: npm i
+
+    - name: Debug variables
+      run: echo "Inputs <${{ github.event.inputs }}> \n Outputs <${{ steps.package.outputs }}> \n Version <{{version}}>"
 
     - name: Bump version in package.json
       id: package
       uses: phips28/gh-action-bump-version@master
       with:
-        tag-prefix: ''
+        tag-prefix: 'v'
         version-type: ${{ github.event.inputs.version }}
+        commit-message: 'CI: bumps version to {{version}} [skip ci]'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Debug new version
-      run: echo "New version is ${{ steps.package.outputs.newVersion }}"
+      run: echo "New version is ${{ steps.package.outputs.newVersion }} and {{version}}"
 
     - name: Generate changelog
       uses: mikepenz/release-changelog-builder-action@v2
