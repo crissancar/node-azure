@@ -42,11 +42,32 @@ jobs:
     - name: Generate changelog
       uses: mikepenz/release-changelog-builder-action@v2
       with:
-        fetchViaCommits: true
-        configuration: |
+        commitMode: true
+        configurationJson: |
           {
             "output": "CHANGELOG.md",
             "future-release": "${{ steps.package.outputs.newTag }}"
+            "template": "#{{CHANGELOG}}",
+            "categories": [
+              {
+                  "title": "## Feature",
+                  "labels": ["feat", "feature"]
+              },
+              {
+                  "title": "## Fix",
+                  "labels": ["fix", "bug"]
+              },
+              {
+                  "title": "## Other",
+                  "labels": []
+              }
+            ],
+            "label_extractor": [
+              {
+                "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
+                "target": "$1"
+              }
+            ],
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
