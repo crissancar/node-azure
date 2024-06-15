@@ -42,7 +42,7 @@ jobs:
     - name: Generate changelog
       uses: mikepenz/release-changelog-builder-action@v2
       with:
-        output: CHANGELOG.md
+        outputFile: CHANGELOG.md
         commitMode: true
         configuration: |
           {
