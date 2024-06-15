@@ -2,7 +2,7 @@ name: Dockerhub Release
 
 on:
   release:
-    types: [published]
+    types: [published, created, released]
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
