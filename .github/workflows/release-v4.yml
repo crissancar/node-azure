@@ -44,8 +44,7 @@ jobs:
       with:
         outputFile: CHANGELOG.md
         failOnError: true
-        fetchViaCommits: true
-        commitMode: true
+        commitMode: false
         configuration: |
           {
             "template": "#{{CHANGELOG}}",
