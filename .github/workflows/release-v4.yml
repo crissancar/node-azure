@@ -43,6 +43,7 @@ jobs:
       uses: mikepenz/release-changelog-builder-action@v2
       with:
         outputFile: CHANGELOG.md
+        failOnError: true
         commitMode: true
         configuration: |
           {
