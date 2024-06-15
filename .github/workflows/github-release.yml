@@ -1,4 +1,4 @@
-name: v4
+name: Github Release
 
 on:
   workflow_dispatch:
