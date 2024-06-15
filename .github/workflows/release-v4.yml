@@ -32,20 +32,23 @@ jobs:
     #   run: npm i
 
     - name: Debug variables
-      run: echo "Input version <${{ github.event.inputs.version }}> \n Outputs <${{ steps.package.outputs }}> \n Version <${{ version }}>"
+      run: echo "Input version <${{ github.event.inputs.version }}> \n Outputs <${{ steps.package.outputs }}>"
 
     - name: Bump version in package.json
       id: package
       uses: phips28/gh-action-bump-version@master
       with:
         tag-prefix: 'v'
-        version-type: ${{ github.event.inputs.version }}
+        -type: ${{ github.event.inputs.version }}
         commit-message: 'CI: bumps version to {{version}} [skip ci]'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Debug new version
-      run: echo "New version is ${{ steps.package.outputs.newVersion }} and {{version}}"
+      run: echo "New version is ${{ steps.package.outputs.newVersion }} and ${{ version }}"
+
+    - name: Debug outputs
+      run: echo "Outputs ${{ toJson(steps.package.outputs) }}"
 
     - name: Generate changelog
       uses: mikepenz/release-changelog-builder-action@v2
