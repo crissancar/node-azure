@@ -82,11 +82,14 @@ jobs:
     - name: Debug github_release outputs
       run: echo "${{ toJson(needs.github_release.outputs) }}"
 
-    - name: Set new tag
+    - name: Set image tag
       run: |
         NEW_TAG="${{ needs.github_release.outputs.new_tag }}"
         IMAGE_TAG="${NEW_TAG:1}"
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+    - name: Debug image tag
+      run: echo "The image tag is $IMAGE_TAG"
       
     - name: Checkout code
       uses: actions/checkout@v4
