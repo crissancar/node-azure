@@ -79,11 +79,11 @@ jobs:
     needs: github_release
     
     steps:
-    - name: Checkout code
-    - uses: actions/checkout@v4
-
     - name: Debug new tag
       run: echo "The new tag is ${{ needs.github_release.outputs.new_tag }}"
+      
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Set up Node.js version
       uses: actions/setup-node@v3
