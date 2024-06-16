@@ -17,7 +17,7 @@ jobs:
   github_release:
     runs-on: ubuntu-latest
     outputs:
-      new_tag: ${{ steps.new_tag.outputs.tag }}
+      new_tag: ${{ steps.package.outputs.newTag }}
     permissions:
       contents: write
 
@@ -51,15 +51,6 @@ jobs:
 
     - name: Debug bump version output
       run: echo "${{ toJson(steps.package.outputs) }}"
-
-    - name: Set step output
-      id: new_tag
-      run: |
-        git fetch --tags
-        echo "tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
-        echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags --max-count=1))"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create CHANGELOG.md
       run: |
