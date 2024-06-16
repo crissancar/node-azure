@@ -53,6 +53,6 @@ jobs:
     - name: App Service deploy
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'crissancar-api-dev'
+        app-name: crissancarapi
         publish-profile: ${{ secrets.AZURE_APPSERVICE_PUBLISH_PROFILE }}
         images: ${{ env.AZURE_REGISTRY_SERVER }}/api:latest
