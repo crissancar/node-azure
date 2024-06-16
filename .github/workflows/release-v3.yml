@@ -1,4 +1,4 @@
-name: Manual Workflow
+name: Release v3
 
 on:
   workflow_dispatch:
