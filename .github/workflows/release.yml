@@ -33,21 +33,6 @@ jobs:
       with:
         node-version: '20.x'
 
-    - name: Install dependencies
-      run: npm install
-    
-    - name: Build application
-      run: npm run build --if-present
-
-    - name: Zip artifact for deployment
-      run: zip release.zip ./* -r
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v3
-      with:
-        name: node-app
-        path: release.zip
-
     - name: Debug version type
       run: echo "Version type is '${{ github.event.inputs.version }}'"
 
@@ -104,13 +89,11 @@ jobs:
       with:
         node-version: '20.x'
 
-    - name: Download artifact from github_release job
-      uses: actions/download-artifact@v3
-      with:
-        name: node-app
-
-    - name: Unzip artifact for deployment
-      run: unzip release.zip
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build application
+      run: npm run build --if-present
 
     - name: Debug github_release outputs
       run: echo "${{ toJson(needs.github_release.outputs) }}"
