@@ -11,7 +11,6 @@ env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }} 
   DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY }} 
-  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} 
 
 jobs:
   release:
@@ -46,7 +45,7 @@ jobs:
       id: changelog
       uses: heinrichreimer/action-github-changelog-generator@v2.4
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create GitHub release
       id: create_release
@@ -56,4 +55,4 @@ jobs:
         body: ${{ steps.changelog.outputs.changelog }}
         draft: false
         prerelease: false
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
