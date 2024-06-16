@@ -81,6 +81,12 @@ jobs:
     steps:
     - name: Debug github_release outputs
       run: echo "${{ toJson(needs.github_release.outputs) }}"
+
+    - name: Set new tag
+      run: |
+        NEW_TAG="${{ needs.github_release.outputs.new_tag }}"
+        CLEAN_TAG="${NEW_TAG:1}"
+        echo "IMAGE_TAG=$CLEAN_TAG" >> $GITHUB_ENV
       
     - name: Checkout code
       uses: actions/checkout@v4
@@ -108,4 +114,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.github_release.outputs.new_tag }}-staging,${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.github_release.outputs.new_tag }}-prod
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-staging,${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-prod
