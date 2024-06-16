@@ -85,8 +85,8 @@ jobs:
     - name: Set new tag
       run: |
         NEW_TAG="${{ needs.github_release.outputs.new_tag }}"
-        CLEAN_TAG="${NEW_TAG:1}"
-        echo "IMAGE_TAG=$CLEAN_TAG" >> $GITHUB_ENV
+        IMAGE_TAG="${NEW_TAG:1}"
+        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
       
     - name: Checkout code
       uses: actions/checkout@v4
