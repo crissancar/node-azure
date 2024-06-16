@@ -50,6 +50,10 @@ jobs:
     - name: Debug bump version output
       run: echo "${{ toJson(steps.package.outputs) }}"
 
+    - name: Set tag environment variable
+      run: |
+        echo "new_tag=$(git describe --tags)" >> $GITHUB_ENV
+
     - name: Create CHANGELOG.md
       run: |
         echo "# Changelog" > CHANGELOG.md
@@ -90,4 +94,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest,${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.github_release.outputs.newTag }}-staging,${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.github_release.outputs.newTag }}-prod
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest,${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.github_release.outputs.new_tag }}-staging,${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.github_release.outputs.new_tag }}-prod
