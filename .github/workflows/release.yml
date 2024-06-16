@@ -12,8 +12,9 @@ env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }} 
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }} 
   DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY }} 
-  AZURE_USERNAME: ${{ env.AZURE_USERNAME }}
-  AZURE_PASSWORD: ${{ env.AZURE_PASSWORD }}
+  AZURE_REGISTRY_SERVER: ${{ secrets.AZURE_REGISTRY_SERVER }}
+  AZURE_REGISTRY_USERNAME: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+  AZURE_REGISTRY_PASSWORD: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
 jobs:
   github_release:
@@ -118,9 +119,9 @@ jobs:
     - name: Login to Azure Container Registry
       uses: azure/docker-login@v2
       with:
-        login-server: crissancarregistry.azurecr.io
-        username: ${{ env.AZURE_USERNAME }}
-        password: ${{ env.AZURE_PASSWORD }}
+        login-server: ${{ env.AZURE_REGISTRY_SERVER }}
+        username: ${{ env.AZURE_REGISTRY_USERNAME }}
+        password: ${{ env.AZURE_REGISTRY_PASSWORD }}
         
     - name: Build and push images to Azure Container Registry
       uses: docker/build-push-action@v2
