@@ -89,7 +89,8 @@ jobs:
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
     - name: Debug images tags
-      run: echo "${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-staging,${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-prod"
+      run: echo "${{ env.DOCKERHUB_REPOSITORY }}:${{ env.IMAGE_TAG }}-staging
+                 ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.IMAGE_TAG }}-prod"
       
     - name: Checkout code
       uses: actions/checkout@v4
@@ -117,4 +118,6 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-staging,${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-prod
+        tags: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.IMAGE_TAG }}-staging
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.IMAGE_TAG }}-prod
