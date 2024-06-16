@@ -16,6 +16,8 @@ env:
 jobs:
   github_release:
     runs-on: ubuntu-latest
+    outputs:
+      new_tag: ${{ steps.new_tag.outputs.tag }}
     permissions:
       contents: write
 
@@ -50,9 +52,14 @@ jobs:
     - name: Debug bump version output
       run: echo "${{ toJson(steps.package.outputs) }}"
 
-    - name: Set new tag output
+    - name: Set step output
       id: new_tag
-      run: echo "::set-output name=new_tag::$(git describe --tags --abbrev=0)"
+      run: |
+        git fetch --tags
+        echo "tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+        echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags --max-count=1))"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create CHANGELOG.md
       run: |
@@ -81,6 +88,9 @@ jobs:
     steps:
     - name: Debug github_release outputs
       run: echo "${{ toJson(needs.github_release.outputs) }}"
+
+    - name: Debug new tag
+      run: echo "The new tag is ${{ needs.github_release.outputs.new_tag }}"
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3
