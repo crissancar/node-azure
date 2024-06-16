@@ -88,8 +88,8 @@ jobs:
         IMAGE_TAG="${NEW_TAG:1}"
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
-    - name: Debug image tag
-      run: echo "The image tag is $IMAGE_TAG"
+    - name: Debug images tags
+      run: echo "${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-staging,${{ env.DOCKERHUB_REPOSITORY }}:$IMAGE_TAG-prod"
       
     - name: Checkout code
       uses: actions/checkout@v4
