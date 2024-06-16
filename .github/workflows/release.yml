@@ -33,6 +33,15 @@ jobs:
       with:
         node-version: '20.x'
 
+    - name: Validate version type
+      run: |
+        if [[ "${{ github.event.inputs.version }}" =~ ^(major|minor|patch)$ ]]; then
+          echo "Version type '${{ github.event.inputs.version }}' is valid."
+        else
+          echo "Error: Version type '${{ github.event.inputs.version }}' is invalid. It must be 'major', 'minor', or 'patch'."
+          exit 1
+        fi
+
     - name: Debug version type
       run: echo "Version type is '${{ github.event.inputs.version }}'"
 
