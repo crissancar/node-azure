@@ -127,8 +127,8 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          ${{  secrets.AZURE_LOGIN_SERVER }}:${{ env.IMAGE_TAG }}-staging
-          ${{  secrets.AZURE_LOGIN_SERVER }}:${{ env.IMAGE_TAG }}-prod
+          ${{ secrets.AZURE_LOGIN_SERVER }}:${{ env.IMAGE_TAG }}-staging
+          ${{ secrets.AZURE_LOGIN_SERVER }}:${{ env.IMAGE_TAG }}-prod
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
