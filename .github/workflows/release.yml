@@ -119,7 +119,7 @@ jobs:
     - name: Login to container registry
       uses: docker/login-action@v2
       with:
-        registry: https://crissancar.azurecr.io/
+        registry: ${{ env.AZURE_REGISTRY_SERVER }}
         username: ${{ env.AZURE_REGISTRY_USERNAME }}
         password: ${{ env.AZURE_REGISTRY_PASSWORD }}
         
@@ -131,6 +131,7 @@ jobs:
         push: true
         tags: |
           ${{ env.AZURE_REGISTRY_SERVER }}/api:${{ env.IMAGE_TAG }}-staging
+          ${{ env.AZURE_REGISTRY_SERVER }}/api:${{ env.IMAGE_TAG }}-prod
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
