@@ -94,6 +94,11 @@ jobs:
     needs: github_release
     
     steps:
+    - name: Setup Node.js version
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.x'
+        
     - name: Download artifact from github_release job
       uses: actions/download-artifact@v3
       with:
