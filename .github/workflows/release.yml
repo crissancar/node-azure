@@ -116,7 +116,7 @@ jobs:
     - name: Login to Azure Container Registry
       uses: azure/docker-login@v2
       with:
-        login-server: ${{ secrets.AZURE_LOGIN_SERVER }}
+        login-server: crissancarregistry.azurecr.io
         username: ${{ secrets.AZURE_LOGIN_USERNAME }}
         password: ${{ secrets.AZURE_LOGIN_PASSWORD }}
         
