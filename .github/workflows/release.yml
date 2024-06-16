@@ -83,7 +83,7 @@ jobs:
         prerelease: false
 
   dockerhub_release:
-    name: Dockerhub release
+    name: Azure Container Registry release
     runs-on: ubuntu-latest
     needs: github_release
     
@@ -116,14 +116,14 @@ jobs:
     - name: Debug environments image tag
       run: echo "${{ env.DOCKERHUB_REPOSITORY }}:${{ env.IMAGE_TAG }}-staging, ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.IMAGE_TAG }}-prod"
   
-    - name: Login to container registry
+    - name: Login to registry
       uses: docker/login-action@v2
       with:
         registry: ${{ env.AZURE_REGISTRY_SERVER }}
         username: ${{ env.AZURE_REGISTRY_USERNAME }}
         password: ${{ env.AZURE_REGISTRY_PASSWORD }}
         
-    - name: Build and push images to Azure Container Registry
+    - name: Build and push images to registry
       uses: docker/build-push-action@v3
       with:
         context: .
