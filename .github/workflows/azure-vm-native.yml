@@ -20,7 +20,7 @@ jobs:
         ssh -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} 
         ls -la
         # cd node-llm 
-        # git pull origin master 
-        # git diff HEAD..origin/develop
+        git pull origin master 
+        git diff HEAD..origin/develop
         # npm run build
         # pm2 restart 2
