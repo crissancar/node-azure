@@ -14,8 +14,8 @@ jobs:
     - name: Deploy to Azure VM
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ env.AZURE_VM_HOST }}
-        username: ${{ env.AZURE_VM_USERNAME }}
+        host: 13.93.3.248
+        username: azureuser
         key: ${{ env.AZURE_VM_SSH_KEY }}
         script: |
           cd node-llm
@@ -23,5 +23,5 @@ jobs:
           git pull origin develop
           echo 'Showing diff...'
           git diff HEAD^ HEAD
-          npm run build
+          # npm run build
           # pm2 restart 2
