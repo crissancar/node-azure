@@ -14,13 +14,18 @@ jobs:
     - name: Deploy to Azure VM
       run: |
         mkdir -p ~/.ssh
+        echo "${{ secrets.AZURE_VM_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.AZURE_VM_HOST }} >> ~/.ssh/known_hosts
         echo "Conectando a la VM de Azure..."
-        ssh -i ${{ secrets.AZURE_VM_SSH_KEY }} ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} "cd node-llm 
+        ssh -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} 
+        "
+        cd node-llm 
         && echo 'Accediendo al directorio node-llm...' 
         && git pull origin master 
         && echo 'Mostrando diferencias...' 
         && git diff HEAD..origin/develop 
-        && echo 'git pull realizado con éxito.'"
+        && echo 'git pull realizado con éxito.'
+        "
         # npm run build
         # pm2 restart 2
