@@ -16,7 +16,7 @@ jobs:
       with:
         host: 13.93.3.248
         username: azureuser
-        key: ${{ env.AZURE_VM_KEY }}
+        key: ${{ secrets.AZURE_VM_KEY }}
         script: |
           cd node-llm
           echo 'Launching git pull...'
