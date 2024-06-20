@@ -21,5 +21,6 @@ jobs:
         ls -la
         # cd node-llm 
         git pull origin master 
+        git log
         # npm run build
         # pm2 restart 2
