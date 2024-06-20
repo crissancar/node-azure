@@ -1,0 +1,27 @@
+name: Deploy SSH VM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Deploy to Azure VM
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.AZURE_VM_HOST }}
+        username: ${{ secrets.AZURE_VM_USERNAME }}
+        key: ${{ secrets.AZURE_VM_SSH_KEY }}
+        script: |
+          cd node-llm
+          echo 'Launching git pull...'
+          git pull origin develop
+          echo 'Showing diff...'
+          git diff HEAD^ HEAD
+          npm run build
+          # pm2 restart 2
