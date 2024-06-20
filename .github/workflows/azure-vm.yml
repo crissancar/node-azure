@@ -20,7 +20,7 @@ jobs:
         script: |
           cd node-llm
           echo 'Launching git pull...'
-          git pull origin develop
+          git pull origin master
           echo 'Showing diff...'
           git diff HEAD^ HEAD
           # npm run build
