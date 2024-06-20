@@ -13,6 +13,7 @@ jobs:
 
     - name: Deploy to Azure VM
       run: |
+        mkdir -p ~/.ssh
         ssh-keyscan -H ${{ secrets.AZURE_VM_HOST }} >> ~/.ssh/known_hosts
         echo "Conectando a la VM de Azure..."
         ssh -i ${{ secrets.AZURE_VM_SSH_KEY }} ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} "cd node-llm 
