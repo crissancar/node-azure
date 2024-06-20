@@ -1,0 +1,25 @@
+name: Deploy SSH VM native
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Deploy to Azure VM
+      run: |
+        ssh-keyscan -H ${{ secrets.AZURE_VM_HOST }} >> ~/.ssh/known_hosts
+        echo "Conectando a la VM de Azure..."
+        ssh -i ${{ secrets.AZURE_VM_SSH_KEY }} ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} "cd node-llm 
+        && echo 'Accediendo al directorio node-llm...' 
+        && git pull origin master 
+        && echo 'Mostrando diferencias...' 
+        && git diff HEAD..origin/develop 
+        && echo 'git pull realizado con éxito.'"
+        # npm run build
+        # pm2 restart 2
