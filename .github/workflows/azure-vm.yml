@@ -19,9 +19,6 @@ jobs:
         key: ${{ secrets.AZURE_VM_KEY }}
         script: |
           cd node-llm
-          echo 'Launching git pull...'
           git pull origin master
-          echo 'Showing diff...'
-          git diff HEAD^ HEAD
           # npm run build
           # pm2 restart 2
