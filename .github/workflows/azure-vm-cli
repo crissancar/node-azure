@@ -1,0 +1,28 @@
+name: Deploy VM cli
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Azure login
+      uses: azure/login@v2.1.1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Run Azure CLI script
+      uses: azure/cli@v2.0.0
+      with:
+        azcliversion: latest
+        inlineScript: |
+          # az vm run-command invoke --resource-group myResourceGroup --name myVM --command-id RunShellScript --scripts "cd /path/to/your/repo; git pull origin master; git log"
+          az account show
+          az storage -h
